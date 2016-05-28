@@ -1,0 +1,35 @@
+{
+  "name": "presentation-builder",
+  "description": "Utility module to create HTML presentations by combining multiple slide files",
+  "version": "0.0.1",
+  "bugs": {
+    "url": "https://github.com/nponiros/presentation_builder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nponiros/presentation_builder.git"
+  },
+  "dependencies": {
+    "front-matter": "2.0.8",
+    "markdown-it": "6.0.2"
+  },
+  "devDependencies": {
+    "eslint": "2.11.0",
+    "jasmine": "2.4.1"
+  },
+  "author": "Nikolas Poniros <nikolas@poniros.de> (http://poniros.de/)",
+  "license": "MIT",
+  "keywords": [
+    "presentations",
+    "build",
+    "multiple slides"
+  ],
+  "engines": {
+    "node": ">=5.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "lint": "eslint -c ./.eslintrc.yml **/*.js"
+  }
+}

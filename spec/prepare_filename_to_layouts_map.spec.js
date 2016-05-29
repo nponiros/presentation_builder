@@ -8,13 +8,11 @@ describe('prepareFilenameToLayout()', () => {
       './path2/file2.html': 'File 2 contents'
     };
 
-    const reader = {
-      read(path) {
-        return fileToContents[path];
-      }
-    };
+    function read(path) {
+      return fileToContents[path];
+    }
 
-    const result = prepareFilenameToLayoutsMap(reader, filepaths);
+    const result = prepareFilenameToLayoutsMap(filepaths, read);
 
     expect(result.get('file1')).toBe(fileToContents[filepaths[0]]);
     expect(result.get('file2')).toBe(fileToContents[filepaths[1]]);

@@ -39,6 +39,8 @@ Options used to configure the builder. Currently needs/supports the following pr
 * nestedSlidePrefix: `string?` Optional parameter used as a prefix when nested slides are defined. Default is `<section>` (reveal.js)
 * nestedSlideSuffix: `string?` Optional parameter used as a suffix when nested slides are defined. Default is `</section>` (reveal.js)
 * slides: `Array<string> | Array<Object>` An array of slide names without the extension used to define the order in which the slides are to be rendered. If an object is used then a `slides` property is expected which defines nested slides
+* markdownRendererOptions: `Object?` Optional attributes which can be used to configure the markdown renderer. See [markdown-it](https://github.com/markdown-it/markdown-it#init-with-presets-and-options) for possible options. Currently the default preset is used and this cannot be changed 
+* slideResolutionFullPath: `boolean?` Optional parameter used to change the way pbuilder matches slide names during rendering. See [Slide resolution](#slide-resolution)
 
 If a slide's front matter contains a layoutAttribute property with the same name, then that takes precedence when rendering the slide
 
@@ -98,7 +100,7 @@ const result = pbuilder.prepareFilenameToContentsMap(filepaths, readFile, option
 * processTemplate: `function(template: string, data: Object)` which processes a given template. It is expected to by synchronous
   * The passed data is an object containing all the sections of a slide, layoutAttributes passed to the builder and front matter attributes for the slide
   * The sections are in a property called `sections`
-* options: `OptionsObject` used options are: `nestedSlidePrefix`, `nestedSlideSuffix` and `slides`. The `slides` property is mandatory
+* options: `OptionsObject` used options are: `nestedSlidePrefix`, `nestedSlideSuffix`, `markdownRendererOptions` and `slides`. The `slides` property is mandatory
 
 If a document contains no sections, then you can get its contents using the `content` attribute of the data.sections object.
 There is also a special section called **code_editor** which will be returned without markdown processing. This section is meant to be used for code which will be passed to a code editor in the slide. For this special section the first newline at the beginning of the section's contents will be stripped.
@@ -142,6 +144,39 @@ const result = pbuilder.splitBody(body, splitter);
  *   content: 'No sections here!'
  * };
  */
+```
+
+## Slide resolution
+
+The tool has two ways of matching the slides given in the `slides` option and the slides read from the disk in `prepareFilenameToContentMap`. The default is to strip all path information and the extension so we can just give the file name in the `slides` option. This makes it easy to define the slides to use as we don't have to type much but this way is also not very flexible. For example if multiple slides with the same name are used, then the last slide read from disk will overwrite the previous ones. With `slideResolutionFullPath` only the extension is stripped and we must give the full path to match a slide. This way we have to type more but it is also more flexible. Nested slides support the `pwd` attribute so that we don't have to give the full path for each slide (assumes that the slides are in a common folder). A slash (/) is automatically added at the end of the `pwd` path.
+
+Example for default resolution:
+```js
+// Paths for prepareFilenameToContentMap
+const filePaths = ['path/to/slide1.md', 'path/to/slide2.md', 'path/to/nested/slide3.md'];
+
+// slides option
+const slides = [
+    'slide1',
+    'slide2', {
+      slides: ['slide3']
+    }
+];
+```
+
+Example for full path resolution:
+```js
+// Paths for prepareFilenameToContentMap
+const filePaths = ['path/to/slide1.md', 'path/to/slide2.md', 'path/to/nested/slide3.md'];
+
+// slides option
+const slides = [
+    'path/to/slide1',
+    'path/to/slide2', {
+      pwd: 'path/to/nested',
+      slides: ['slide3']
+    }
+];
 ```
 
 ## License

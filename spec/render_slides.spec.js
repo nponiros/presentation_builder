@@ -31,15 +31,35 @@ describe('renderSlides()', () => {
     }
   };
 
+  const slide4Content = 'Slide 4';
+  const slide4 = {
+    attributes: {},
+    data: {
+      sections: {}
+    }
+  };
+
+  const slide5Content = 'Slide 5';
+  const slide5 = {
+    attributes: {},
+    data: {
+      sections: {}
+    }
+  };
+
   const slidesMap = new Map();
   slidesMap.set('slide1', slide1);
   slidesMap.set('slide2', slide2);
   slidesMap.set('slide3', slide3);
+  slidesMap.set('nested/slide4', slide4);
+  slidesMap.set('nested/slide5', slide5);
 
   beforeEach(() => {
     slide1.data.sections.content = slide1Content;
     slide2.data.sections.content = slide2Content;
     slide3.data.sections.content = slide3Content;
+    slide4.data.sections.content = slide4Content;
+    slide5.data.sections.content = slide5Content;
   });
 
   function processTemplate(template, data) {
@@ -90,6 +110,27 @@ describe('renderSlides()', () => {
     const result = renderSlides(slidesMap, layoutsMap, processTemplate, options);
 
     const expected = '<p>Slide 1</p>\n' + nestedSlidePrefix + '<p>Slide 2</p>\n<p>Slide 3</p>\n' + nestedSlideSuffix;
+
+    expect(result).toBe(expected);
+  });
+
+  it('should support a pwd attribute when nested slides are given with slideResolutionFullPath', () => {
+    const options = {
+      slides: [
+        {
+          pwd: 'nested',
+          slides: ['slide4']
+        }, {
+          slides: ['nested/slide5']
+        }
+      ],
+      slideResolutionFullPath: true
+    };
+
+    const result = renderSlides(slidesMap, layoutsMap, processTemplate, options);
+
+    const expected = c.nestedSlidePrefix + '<p>Slide 4</p>\n' + c.nestedSlideSuffix +
+        c.nestedSlidePrefix + '<p>Slide 5</p>\n' + c.nestedSlideSuffix;
 
     expect(result).toBe(expected);
   });

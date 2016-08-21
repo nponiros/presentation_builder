@@ -22,6 +22,26 @@ describe('prepareFilenameToContentMap()', () => {
     expect(result.get('slide2')).not.toBeUndefined();
   });
 
+  it('should keep the given path in case slideResolutionFullPath is given as option', () => {
+    const filepaths = ['./path1/slide1.md', './path2/slide2.md'];
+    const fileToContents = {
+      './path1/slide1.md': 'Slide 1 contents',
+      './path2/slide2.md': 'Slide 2 contents'
+    };
+    const options = {
+      slideResolutionFullPath: true
+    };
+
+    function read(path) {
+      return fileToContents[path];
+    }
+
+    const result = prepareFilenameToContentMap(filepaths, read, options);
+
+    expect(result.get('./path1/slide1')).not.toBeUndefined();
+    expect(result.get('./path2/slide2')).not.toBeUndefined();
+  });
+
   it('should return an object with a data and an attribute property as contents', () => {
     const filepaths = ['./path1/slide1.md', './path2/slide2.md'];
     const fileToContents = {

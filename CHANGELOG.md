@@ -1,6 +1,10 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2017-09-16
+
+* Add `filename` property to the result of prepareFilenameToContentMap as part of the data property
+
 ## [1.1.0] - 2016-08-21
 
 * Update dependencies and devDependencies

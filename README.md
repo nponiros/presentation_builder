@@ -68,7 +68,7 @@ const result = pbuilder.prepareFilenameToLayoutsMap(layouts, readFile);
 * readFile: `function(path: string): string` reads the contents of the file synchronously and returns the contents as string
 * options: `OptionsObject?` the only used options are `layoutAttributes` and `sectionSplitter`
 
-Returns a new Map with file names without extension as keys and an object with the contents of the file.
+Returns a new Map with file names without extension as keys and an object with the contents of the file and its file name.
 
 ```js
 function readFile(filePath) {
@@ -85,7 +85,11 @@ const result = pbuilder.prepareFilenameToContentsMap(filepaths, readFile, option
  * result = Map {'slide1' => {
  *      attributes: front-matter attributes,
         data: {
-          contains: front-matter attributes, OptionsObject.layoutAttributes
+          {
+            ...front-matter attributes
+            ...OptionsObject.layoutAttributes
+          },
+          filename: 'path/to/slide1',
           sections: Object with all the sections of the document, if no sections are found then it contains a content property (not markdown processed yet)
         }
  *    }

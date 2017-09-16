@@ -56,10 +56,10 @@ describe('prepareFilenameToContentMap()', () => {
     const result = prepareFilenameToContentMap(filepaths, read);
 
     // We have no sections, front matter or options.layoutAttributes -> data only has a section with content
-    expect(result.get('slide1').data).toEqual({sections: {content: 'Slide 1 contents'}});
+    expect(result.get('slide1').data).toEqual({filename: 'slide1', sections: {content: 'Slide 1 contents'}});
     // We have no front matter -> empty attributes
     expect(result.get('slide1').attributes).toEqual({});
-    expect(result.get('slide2').data).toEqual({sections: {content: 'Slide 2 contents'}});
+    expect(result.get('slide2').data).toEqual({filename: 'slide2', sections: {content: 'Slide 2 contents'}});
     expect(result.get('slide2').attributes).toEqual({});
   });
 

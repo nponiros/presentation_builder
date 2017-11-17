@@ -1,6 +1,12 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-11-17
+
+* Breaking: If a slide cannot be converted (usually because the slide cannot be found) we throw an exception "Could not convert ${subslideName}" for normal slides and Could not convert ${pwd}${subslideName} for nested slides
+* Breaking: Update front-matter to 2.3.0, the front-matter separators must be at start of line otherwise those won't be recognized as front-matter separators
+* Breaking: Update markdown-it to 8.4.0, this is a major version update and might break things
+
 ## [1.2.0] - 2017-09-16
 
 * Add `filename` property to the result of prepareFilenameToContentMap as part of the data property

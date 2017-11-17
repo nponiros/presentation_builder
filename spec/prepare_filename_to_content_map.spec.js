@@ -65,13 +65,13 @@ describe('prepareFilenameToContentMap()', () => {
 
   it('should contain front matter attributes in the data and attributes properties', () => {
     const filepaths = ['./path1/slide1.md', './path2/slide2.md'];
-    const slide1Contents = commonTags.stripIndent`---
+    const slide1Contents = commonTags.stripIndents`---
         title: Slide 1
         ---
 
         Contents of slide 1`;
 
-    const slide2Contents = commonTags.stripIndent`---
+    const slide2Contents = commonTags.stripIndents`---
         title: Slide 2
         ---
 
@@ -96,13 +96,13 @@ describe('prepareFilenameToContentMap()', () => {
 
   it('should override attributes in options.layoutAttributes which have the same name as attributes in the front matter (only in the data property)', () => {
     const filepaths = ['./path1/slide1.md', './path2/slide2.md'];
-    const slide1Contents = commonTags.stripIndent`---
+    const slide1Contents = commonTags.stripIndents`---
         slideTitle: Slide 1
         ---
 
         Contents of slide 1`;
 
-    const slide2Contents = commonTags.stripIndent`---
+    const slide2Contents = commonTags.stripIndents`---
         title: Slide 2
         ---
 
@@ -133,7 +133,7 @@ describe('prepareFilenameToContentMap()', () => {
 
   it('should have a sections property in the data with all slide sections', () => {
     const filepaths = ['./path1/slide1.md'];
-    const slide1Contents = commonTags.stripIndent`---
+    const slide1Contents = commonTags.stripIndents`---
         title: Slide 1
         ---
 
@@ -155,7 +155,7 @@ describe('prepareFilenameToContentMap()', () => {
 
     const result = prepareFilenameToContentMap(filepaths, read);
 
-    expect(result.get('slide1').data.sections.section1).toBe('\n        Contents of slide 1 section 1\n        \n        ');
-    expect(result.get('slide1').data.sections.section2).toBe('\n        Contents of slide 1 section 2');
+    expect(result.get('slide1').data.sections.section1).toBe('\nContents of slide 1 section 1\n\n');
+    expect(result.get('slide1').data.sections.section2).toBe('\nContents of slide 1 section 2');
   });
 });

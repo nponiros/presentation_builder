@@ -134,4 +134,32 @@ describe('renderSlides()', () => {
 
     expect(result).toBe(expected);
   });
+
+  it('should throw an exception if it fails to convert a slide', () => {
+    const options = {
+      slides: [
+        'notAvailable'
+      ]
+    };
+
+    const fn = () => {
+      renderSlides(slidesMap, layoutsMap, processTemplate, options);
+    };
+
+    expect(fn).toThrowError(Error, 'Could not convert notAvailable');
+  });
+
+  it('should throw an exception if it fails to convert a nested slide', () => {
+    const options = {
+      slides: [
+        {slides: ['notAvailableNested']}
+      ]
+    };
+
+    const fn = () => {
+      renderSlides(slidesMap, layoutsMap, processTemplate, options);
+    };
+
+    expect(fn).toThrowError(Error, 'Could not convert notAvailableNested');
+  });
 });
